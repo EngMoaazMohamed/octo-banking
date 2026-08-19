@@ -78,11 +78,19 @@ WSGI_APPLICATION = 'transactions_service.wsgi.application'
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+        "OPTIONS": {
+            "timeout": 20,
+            "transaction_mode": "IMMEDIATE",
+        },
+        "TEST": {
+            "NAME": BASE_DIR / "test_db.sqlite3",
+        },
     }
 }
+
 
 
 # Password validation
@@ -145,7 +153,8 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
-    "SIGNING_KEY": "shared-secret-change-me",
+    "SIGNING_KEY": "shared-secret-change-me-padded-to-32-bytes!!",
+
 }
 
 SPECTACULAR_SETTINGS = {
